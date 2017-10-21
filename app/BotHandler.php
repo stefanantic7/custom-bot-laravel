@@ -21,18 +21,18 @@ class BotHandler extends BaseHandler
      */
     public function handle(ReceiveMessage $message)
     {
-//        if($message->getMessage() == 'start') {
-//            $this->newUser($message->getSender());
-//        }
-//        else if ($message->getMessage() == 'restart') {
-//            $this->deleteUser($message->getSender());
-//        }
+        if($message->getMessage() == 'start') {
+            $this->newUser($message->getSender());
+        }
+        else if ($message->getMessage() == 'restart') {
+            $this->deleteUser($message->getSender());
+        }
         $this->send(new Text($message->getSender(), "Default Handler: {$message->getMessage()}"));
     }
 
     private function newUser($faceId)
     {
-        $user = new User();
+        $user = new FaceUser();
         $user->face_id = $faceId;
         $user->save();
 
@@ -42,6 +42,6 @@ class BotHandler extends BaseHandler
     }
 
     private function  deleteUser($faceId){
-        User::where('face_id', $faceId)->delete();
+        FaceUser::where('face_id', $faceId)->delete();
     }
 }

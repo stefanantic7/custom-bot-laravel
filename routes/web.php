@@ -12,10 +12,7 @@
 */
 
 Route::get('/', function () {
-//    return \App\Rule::with(['conclusion', 'conditions'])->get();
-    $array = json_decode(\App\FaceUser::first()->trueStatements);
 
-    return $array;
 });
 
 ////route for verification
