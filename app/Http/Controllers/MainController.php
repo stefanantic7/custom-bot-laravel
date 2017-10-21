@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -9,7 +10,7 @@ class MainController extends Controller
     public function receive(Request $request)
     {
         $data = $request->all();
-        \Log::info($data);
+        Log::info($data);
 
         //get the user’s id
         $id = $data["entry"][0]["messaging"][0]["sender"]["id"];
