@@ -28,7 +28,7 @@ class BotHandler extends BaseHandler
             $this->deleteUser($message->getSender());
         }
         else {
-            $this->handleAnswer();
+            $this->handleAnswer($message->getSender(), $message->getMessage());
         }
     }
 
@@ -45,8 +45,23 @@ class BotHandler extends BaseHandler
         $this->send(new Text($faceId, $user->question));
     }
 
-    private function handleAnswer(){
+    private function handleAnswer($faceId, $answer){
+        $rules = Rule::all();
+        $user = FaceUser::where('face_id', $faceId)->first();
+        foreach ($rules as $rule) {
+            $returned = $rule->check($user, $answer);
+            if($returned == null) {
+                $user = FaceUser::where('face_id', $faceId)->first();
+                $this->send(new Text($faceId, $user->question));
+                return;
+            }
 
+            if($returned == true ){
+                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion()->text));
+                return;
+            }
+        }
+        $this->send(new Text($faceId, "Vodu pij"));
     }
 
     private function  deleteUser($faceId){

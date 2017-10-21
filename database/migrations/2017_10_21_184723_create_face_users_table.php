@@ -18,7 +18,7 @@ class CreateFaceUsersTable extends Migration
             $table->string('face_id')->unique();
             $table->json('trueStatements')->default('[]');
             $table->json('falseStatements')->default('[]');
-            $table->string('question');
+            $table->string('question')->default('');
             $table->timestamps();
         });
     }
