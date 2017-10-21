@@ -28,7 +28,12 @@ class BotHandler extends BaseHandler
             $this->deleteUser($message->getSender());
         }
         else {
-            $this->handleAnswer($message->getSender(), $message->getMessage());
+            $user = FaceUser::where('face_id', $message->getSender())->first();
+            if($user){
+                if($message->getMessage() == 'da' || $message->getMessage() == 'ne'){
+                    $this->handleAnswer($message->getSender(), $message->getMessage());
+                }
+            }
         }
     }
 
@@ -50,8 +55,7 @@ class BotHandler extends BaseHandler
         $user = FaceUser::where('face_id', $faceId)->first();
         foreach ($rules as $rule) {
             $returned = $rule->check($user, $answer);
-            if($returned === null) {
-                $user = FaceUser::where('face_id', $faceId)->first();
+            if(is_null($returned)) {
                 $this->send(new Text($faceId, $user->question));
                 return;
             }

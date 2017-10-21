@@ -12,7 +12,21 @@
 */
 
 Route::get('/', function () {
+    $user = \App\FaceUser::where('face_id', 'asdf')->first();
+    var_dump($user);
+    $rule = \App\Rule::all()->first();
+    $return = $rule->check($user, "da");
 
+    if($return === true) {
+        return 'true';
+    }
+    else if($return === false) {
+        return 'false';
+    }
+    else if(is_null($return)){
+        return 'null';
+    }
+    return $user;
 });
 
 ////route for verification
