@@ -66,6 +66,7 @@ class BotHandler extends BaseHandler
                 $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
                 $user->delete();
                 $this->send(new Text($faceId, 'Da biste krenuli ponovo, ukucajte: "start"'));
+
                 return;
             }
         }
