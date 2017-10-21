@@ -32,7 +32,7 @@ class BotHandler extends BaseHandler
             $user = FaceUser::where('face_id', $message->getSender())->first();
             if($user){
                 if(strtolower($message->getMessage()) == 'da' || strtolower($message->getMessage()) == 'ne'){
-                    $this->handleAnswer($message->getSender(), $message->getMessage());
+                    $this->handleAnswer($message->getSender(), strtolower($message->getMessage()));
                 }
                 else {
                     $this->send(new Text($message->getSender(), 'Odgovarajte sa "da" ili "ne"'));
