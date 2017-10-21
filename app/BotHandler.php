@@ -31,6 +31,7 @@ class BotHandler extends BaseHandler
             $user = FaceUser::where('face_id', $message->getSender())->first();
             if($user){
                 if($message->getMessage() == 'da' || $message->getMessage() == 'ne'){
+
                     $this->handleAnswer($message->getSender(), $message->getMessage());
                 }
             }
