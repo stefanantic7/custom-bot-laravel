@@ -39,6 +39,8 @@ class BotHandler extends BaseHandler
 
     private function newUser($faceId)
     {
+        $this->send(new Text($faceId, 'Nova sesija otvorena. Ukoliko zelite novo pokretanje, unesite: restart'));
+
         $user = new FaceUser();
         $user->face_id = $faceId;
 
@@ -62,14 +64,17 @@ class BotHandler extends BaseHandler
 
             if($returned === true ){
                 $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
+                $user->delete();
+                $this->send(new Text($faceId, 'Da biste krenuli ponovo, ukucajte: start'));
                 return;
             }
         }
-        $this->send(new Text($faceId, "Vodu pij"));
+        $this->send(new Text($faceId, "Nema rezultata"));
     }
 
     private function  deleteUser($faceId){
         FaceUser::where('face_id', $faceId)->delete();
-        $this->send(new Text($faceId, "Vasa sesija je obrisana"));
+        $this->send(new Text($faceId, "Vasa sesija je obrisana."));
+        $this->newUser($faceId);
     }
 }
