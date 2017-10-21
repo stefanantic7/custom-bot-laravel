@@ -15,7 +15,7 @@ class CreateFaceUsersTable extends Migration
     {
         Schema::create('face_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('face_id');
+            $table->string('face_id')->unique();
             $table->json('trueStatements')->default('[]');
             $table->json('falseStatements')->default('[]');
             $table->timestamps();
