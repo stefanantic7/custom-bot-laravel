@@ -27,21 +27,30 @@ class BotHandler extends BaseHandler
         else if ($message->getMessage() == 'restart') {
             $this->deleteUser($message->getSender());
         }
-//        $this->send(new Text($message->getSender(), "Default Handler: {$message->getMessage()}"));
+        else {
+            $this->handleAnswer();
+        }
     }
 
     private function newUser($faceId)
     {
         $user = new FaceUser();
         $user->face_id = $faceId;
-        $user->save();
 
         $rule = Rule::with('conditions')->first();
 
-        $this->send(new Text($faceId, $rule->conditions[0]->text));
+        $user->question = $rule->conditions[0]->text;
+        $user->save();
+
+        $this->send(new Text($faceId, $user->question));
+    }
+
+    private function handleAnswer(){
+
     }
 
     private function  deleteUser($faceId){
         FaceUser::where('face_id', $faceId)->delete();
+        $this->send(new Text($faceId, "Vasa sesija je obrisana"));
     }
 }
