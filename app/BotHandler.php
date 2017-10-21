@@ -61,7 +61,7 @@ class BotHandler extends BaseHandler
             }
 
             if($returned === true ){
-                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion()->text));
+                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
                 return;
             }
         }
