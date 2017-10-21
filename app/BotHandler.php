@@ -21,17 +21,17 @@ class BotHandler extends BaseHandler
      */
     public function handle(ReceiveMessage $message)
     {
-        if($message->getMessage() == 'start') {
+        if(strtolower($message->getMessage()) == 'start') {
             FaceUser::where('face_id', $message->getSender())->delete();
             $this->newUser($message->getSender());
         }
-        else if ($message->getMessage() == 'restart') {
+        else if (strtolower($message->getMessage()) == 'restart') {
             $this->deleteUser($message->getSender());
         }
         else {
             $user = FaceUser::where('face_id', $message->getSender())->first();
             if($user){
-                if(strtolower($message->getMessage()) == 'da' || strtolower($message->getMessage() == 'ne')){
+                if(strtolower($message->getMessage()) == 'da' || strtolower($message->getMessage()) == 'ne'){
                     $this->handleAnswer($message->getSender(), $message->getMessage());
                 }
                 else {
