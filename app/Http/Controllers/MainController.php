@@ -9,12 +9,14 @@ class MainController extends Controller
     public function receive(Request $request)
     {
         $data = $request->all();
-        //get the user’s id
-        $id = $data["entry"][0]["messaging"][0]["sender"]["id"];
+        if(isset($data['entry'])){
+            //get the user’s id
+            $id = $data["entry"][0]["messaging"][0]["sender"]["id"];
 //        $data["entry"][0]["messaging"][0]["message"]["text"]
-        $received = $data["entry"][0]["messaging"][0]["message"]["text"];
-        if(is_string($received)){
-            $this->sendTextMessage($id, $received);
+            $received = $data["entry"][0]["messaging"][0]["message"];
+            if(isset($received)){
+                $this->sendTextMessage($id, $received['text']);
+            }
         }
     }
 
