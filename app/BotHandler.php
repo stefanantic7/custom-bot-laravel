@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Casperlaitw\LaravelFbMessenger\Contracts\BaseHandler;
 use Casperlaitw\LaravelFbMessenger\Messages\ReceiveMessage;
 use Casperlaitw\LaravelFbMessenger\Messages\Text;
 
