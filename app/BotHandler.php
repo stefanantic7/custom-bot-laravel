@@ -27,7 +27,7 @@ class BotHandler extends BaseHandler
         else if ($message->getMessage() == 'restart') {
             $this->deleteUser($message->getSender());
         }
-        $this->send(new Text($message->getSender(), "Default Handler: {$message->getMessage()}"));
+//        $this->send(new Text($message->getSender(), "Default Handler: {$message->getMessage()}"));
     }
 
     private function newUser($faceId)
@@ -38,7 +38,7 @@ class BotHandler extends BaseHandler
 
         $rule = Rule::with('conditions')->first();
 
-        $this->send(new Text($faceId, $rule->conditions[0]));
+        $this->send(new Text($faceId, $rule->conditions[0]->text));
     }
 
     private function  deleteUser($faceId){
