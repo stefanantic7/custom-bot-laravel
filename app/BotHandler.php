@@ -39,7 +39,7 @@ class BotHandler extends BaseHandler
 
     private function newUser($faceId)
     {
-        $this->send(new Text($faceId, 'Nova sesija otvorena. Ukoliko zelite novo pokretanje, unesite: restart'));
+        $this->send(new Text($faceId, 'Nova sesija otvorena. Odgovarajte sa "da" i "ne". Ukoliko zelite novo pokretanje, unesite: "restart"'));
 
         $user = new FaceUser();
         $user->face_id = $faceId;
@@ -65,7 +65,7 @@ class BotHandler extends BaseHandler
             if($returned === true ){
                 $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
                 $user->delete();
-                $this->send(new Text($faceId, 'Da biste krenuli ponovo, ukucajte: start'));
+                $this->send(new Text($faceId, 'Da biste krenuli ponovo, ukucajte: "start"'));
                 return;
             }
         }
