@@ -50,13 +50,13 @@ class BotHandler extends BaseHandler
         $user = FaceUser::where('face_id', $faceId)->first();
         foreach ($rules as $rule) {
             $returned = $rule->check($user, $answer);
-            if($returned == null) {
+            if($returned === null) {
                 $user = FaceUser::where('face_id', $faceId)->first();
                 $this->send(new Text($faceId, $user->question));
                 return;
             }
 
-            if($returned == true ){
+            if($returned === true ){
                 $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion()->text));
                 return;
             }
