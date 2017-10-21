@@ -29,7 +29,7 @@ class MainController extends Controller
                 "text" => $messageText
             ]
         ];
-        $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . 'EAAWc81PlKzgBAFKf0Qc3hMqrHW9kjuJTrVtiLlJMhRp46ptLosIm6CcVfivmouI6d94TtIw68GbQZCwC5wItyjZCnN9XwdgYnDLUwqs8kyuZCQnfFfKwSyZAX8sWvitopOm77RAZAPmZBsm9dt7ABbMMYkcmr3L2VFBzZCrVIhPjAZDZD');
+        $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . 'EAAWc81PlKzgBAK5WfrRhxGUZCvuqXt1fJeE5ETqRR4vMZCGG5xjWHfPIxWKbLR60XxsNpnPWnAosU8M58jY5AGBjyxMCTmzveGYSiftZAdIOkYBTBt1ZAvnDf5VEKWZC0QmKcWjBryR27WTWI6nMFo4mn0DWRPyymWEYOgEHZCdQZDZD');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
