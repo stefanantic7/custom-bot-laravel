@@ -22,6 +22,7 @@ Artisan::command('json:import', function () {
     $rules_json = json_decode($content)->rules;
     foreach ($rules_json as $rule_json){
         $rule = new \App\Rule();
+        $rule->save();
         $conclusion = new \App\Statement();
 
         $conclusion->text = $rule_json->conclusion;
