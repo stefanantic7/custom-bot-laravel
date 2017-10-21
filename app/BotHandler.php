@@ -34,13 +34,19 @@ class BotHandler extends BaseHandler
                 if($message->getMessage() == 'da' || $message->getMessage() == 'ne'){
                     $this->handleAnswer($message->getSender(), $message->getMessage());
                 }
+                else {
+                    $this->send(new Text($message->getSender(), 'Odgovarajte sa "da" ili "ne"'));
+                }
+            }
+            else {
+                $this->send(new Text($message->getSender(), 'Za pocetak, unesite: "start"'));
             }
         }
     }
 
     private function newUser($faceId)
     {
-        $this->send(new Text($faceId, 'Nova sesija otvorena. Odgovarajte sa "da" i "ne". Ukoliko zelite novo pokretanje, unesite: "restart"'));
+        $this->send(new Text($faceId, 'Nova sesija otvorena. Odgovarajte sa "da" ili "ne". Ukoliko zelite novo pokretanje, unesite: "restart"'));
 
         $user = new FaceUser();
         $user->face_id = $faceId;
