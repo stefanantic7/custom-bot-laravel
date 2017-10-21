@@ -9,6 +9,7 @@ class MainController extends Controller
     public function receive(Request $request)
     {
         $data = $request->all();
+        dd($data);
         //get the user’s id
         $id = $data["entry"][0]["messaging"][0]["sender"]["id"];
         $this->sendTextMessage($id, $id = $data["entry"][0]["messaging"][0]["message"]);
