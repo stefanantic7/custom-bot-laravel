@@ -71,8 +71,7 @@ class BotHandler extends BaseHandler
 
             if($returned === true ){
                 $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
-                $user->delete();
-                $this->send(new Text($faceId, 'Da biste krenuli ponovo, ukucajte: "start"'));
+                $this->finished($user);
 
                 return;
             }
@@ -88,13 +87,18 @@ class BotHandler extends BaseHandler
         else {
             $weight = round($max/count($user->suggestedRule->conditions), 2);
             $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight));
-
         }
+        $this->finished($user);
     }
 
     private function  deleteUser($faceId){
         FaceUser::where('face_id', $faceId)->delete();
         $this->send(new Text($faceId, "Vasa sesija je obrisana."));
         $this->newUser($faceId);
+    }
+    private function finished($user) {
+        $id = $user->face_id;
+        $user->delete();
+        $this->send(new Text($id, 'Da biste krenuli ponovo, ukucajte: "start"'));
     }
 }
