@@ -22,11 +22,9 @@ class Rule extends Model
         $trueStatements = json_decode($user->trueStatements);
         $falseStatements = json_decode($user->falseStatements);
 
+
         if(in_array($conclusion, $trueStatements)) {
             return true;
-        }
-        if(in_array($conclusion, $falseStatements)) {
-            return false;
         }
 
         foreach ($conditions as $condition) {
@@ -35,7 +33,7 @@ class Rule extends Model
                 continue;
             }
             if (in_array($condition, $falseStatements)) {
-                return false;
+                continue;
             }
 
             if($condition == $question) {
@@ -47,9 +45,11 @@ class Rule extends Model
                 }
                 if($answer == 'ne') {
                     array_push($falseStatements, $condition);
+                    array_push($falseStatements, $conclusion);
                     $user->falseStatements = json_encode($falseStatements);
                     $user->save();
-                    return false;
+
+                    continue;
                 }
             }
             else {
@@ -58,10 +58,17 @@ class Rule extends Model
                 return null;
             }
         }
-        array_push($trueStatements, $conclusion);
-        $user->trueStatements = json_encode($trueStatements);
-        $user->save();
-        return true;
+        if(in_array($conclusion, $falseStatements)){
+            return false;
+        }
+        else {
+            array_push($trueStatements, $conclusion);
+            $user->trueStatements = json_encode($trueStatements);
+            $user->save();
+            return true;
+        }
+
+
     }
 
     public function isGreaterThan($value) {
