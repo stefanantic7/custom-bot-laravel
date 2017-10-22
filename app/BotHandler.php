@@ -81,7 +81,7 @@ class BotHandler extends BaseHandler
         foreach ($rules as $rule) {
             $max = $user->getMoreRelevant($max, $rule);
         }
-
+        $user = FaceUser::where('face_id', $faceId)->first();
         if(is_null($user->suggestedRule)){
             $this->send(new Text($faceId, 'Nema resenja'));
         }
