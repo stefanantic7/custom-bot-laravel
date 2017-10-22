@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FaceUser extends Model
 {
-    private $suggestedRule;
-    private $conditionsForSuggested = 0;
-
     public function getMoreRelevant($currentMax, $rule) {
         $conditions = $rule->conditions;
         $trueStatements = json_decode($this->trueStatements);
@@ -21,7 +18,7 @@ class FaceUser extends Model
         }
         if($this->conditionsForSuggested > $currentMax) {
             $currentMax = $this->conditionsForSuggested;
-            $this->suggestedRule = $rule->id;
+            $this->suggestedRule = $rule->text;
         }
         $this->conditionsForSuggested = 0;
         return $currentMax;

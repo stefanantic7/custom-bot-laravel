@@ -19,6 +19,8 @@ class CreateFaceUsersTable extends Migration
             $table->json('trueStatements')->default('[]');
             $table->json('falseStatements')->default('[]');
             $table->string('question')->default('');
+            $table->integer('conditionsForSuggested')->default(0);
+            $table->string('suggestedRule')->default(null);
             $table->timestamps();
         });
     }
