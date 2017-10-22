@@ -18,10 +18,10 @@ class FaceUser extends Model
         }
         if($this->conditionsForSuggested > $currentMax) {
             $currentMax = $this->conditionsForSuggested;
-            $this->suggestedRule = $rule->conclusion->text;
+            $this->suggestedRule = $rule;
         }
         $this->conditionsForSuggested = 0;
-        $this->save();
+//        $this->save();
         return $currentMax;
     }
 }

@@ -86,7 +86,7 @@ class BotHandler extends BaseHandler
             $this->send(new Text($faceId, 'Nema resenja'));
         }
         else {
-            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule));
+            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->conclusion->text));
 
         }
     }
@@ -94,6 +94,6 @@ class BotHandler extends BaseHandler
     private function  deleteUser($faceId){
         FaceUser::where('face_id', $faceId)->delete();
         $this->send(new Text($faceId, "Vasa sesija je obrisana."));
-//        $this->newUser($faceId);
+        $this->newUser($faceId);
     }
 }
