@@ -28,7 +28,7 @@ Artisan::command('json:import', function () {
         $conclusion->text = $rule_json->conclusion;
         $conclusion->conclusion_for_rule = $rule->id;
 
-        foreach ($rule_json->conditions as $condition_json) {
+        foreach ($rule_json->condition as $condition_json) {
             $condition = new \App\Statement();
 
             $condition->text = $condition_json;
