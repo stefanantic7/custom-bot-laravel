@@ -12,6 +12,10 @@
 */
 
 Route::get('/', function () {
+    $user = new \App\FaceUser();
+    $user->face_id = 'asd';
+    $user->save();
+    return $user;
     $rules = \App\Rule::with(['conditions', 'conclusion'])->get();
     return $rules;
 });
