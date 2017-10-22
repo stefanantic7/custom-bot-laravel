@@ -94,6 +94,6 @@ class BotHandler extends BaseHandler
     private function  deleteUser($faceId){
         FaceUser::where('face_id', $faceId)->delete();
         $this->send(new Text($faceId, "Vasa sesija je obrisana."));
-        $this->newUser($faceId);
+//        $this->newUser($faceId);
     }
 }
