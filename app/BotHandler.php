@@ -77,13 +77,18 @@ class BotHandler extends BaseHandler
                 return;
             }
         }
-//        $max = 0;
-//        foreach ($rules as $rule) {
-//            $max = $user->getMoreRelevant($max, $rule);
-//        }
+        $max = 0;
+        foreach ($rules as $rule) {
+            $max = $user->getMoreRelevant($max, $rule);
+        }
 
-//        $this->send(new Text($faceId, 'Preporuka: '.$user->getSuggestedRule()->text));
-        $this->send(new Text($faceId, 'Nema resenja'));
+        if(is_null($user->suggestedRule)){
+            $this->send(new Text($faceId, 'Nema resenja'));
+        }
+        else {
+            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->text));
+
+        }
     }
 
     private function  deleteUser($faceId){

@@ -21,13 +21,9 @@ class FaceUser extends Model
         }
         if($this->conditionsForSuggested > $currentMax) {
             $currentMax = $this->conditionsForSuggested;
-            $this->suggestedRule = $rule;
+            $this->suggestedRule = $rule->id;
         }
-        $this->suggestedRule = 0;
+        $this->conditionsForSuggested = 0;
         return $currentMax;
-    }
-
-    public function getSuggestedRule() {
-        return $this->suggestedRule;
     }
 }
