@@ -33,6 +33,9 @@ class Rule extends Model
                 continue;
             }
             if (in_array($condition, $falseStatements)) {
+                array_push($falseStatements, $conclusion);
+                $user->falseStatements = json_encode($falseStatements);
+                $user->save();
                 continue;
             }
 
@@ -68,10 +71,6 @@ class Rule extends Model
             return true;
         }
 
-
-    }
-
-    public function isGreaterThan($value) {
 
     }
 }
