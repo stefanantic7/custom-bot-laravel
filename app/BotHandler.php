@@ -77,7 +77,12 @@ class BotHandler extends BaseHandler
                 return;
             }
         }
-        $this->send(new Text($faceId, "Nema rezultata"));
+        $max = 0;
+        foreach ($rules as $rule) {
+            $max = $user->getMoreRelevant($max, $rule);
+        }
+
+        $this->send(new Text($faceId, 'Preporuka: '.$user->getSuggestedRule()->text));
     }
 
     private function  deleteUser($faceId){

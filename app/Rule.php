@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rule extends Model
 {
+    public $trueConditionsCount = 0;
     public function conclusion(){
         return $this->hasOne(Statement::class, 'conclusion_for_rule');
     }
@@ -61,5 +62,9 @@ class Rule extends Model
         $user->trueStatements = json_encode($trueStatements);
         $user->save();
         return true;
+    }
+
+    public function isGreaterThan($value) {
+
     }
 }
