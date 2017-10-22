@@ -76,17 +76,26 @@ class BotHandler extends BaseHandler
                 return;
             }
         }
-        $max = 0;
+        $max1 = $max2 = $max3 = 0;
         foreach ($rules as $rule) {
-            $max = $user->getMoreRelevant($max, $rule);
+            $relevant = $user->getMoreRelevant($max1, $rule);
+            $max1 = $relevant['max1'];
+            $max2 = $relevant['max2'];
+            $max3 = $relevant['max3'];
         }
 
         if(is_null($user->suggestedRule)){
             $this->send(new Text($faceId, 'Nema resenja'));
         }
         else {
-            $weight = round($max/count($user->suggestedRule->conditions), 2);
-            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight));
+            $weight1 = round($max1/count($user->suggestedRule->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka 1: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight1));
+
+            $weight2 = round($max2/count($user->suggestedRule->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka 2: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight2));
+
+            $weight3 = round($max3/count($user->suggestedRule->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka 3: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight3));
         }
         $this->finished($user);
     }
