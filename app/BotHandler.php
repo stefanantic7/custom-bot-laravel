@@ -86,7 +86,8 @@ class BotHandler extends BaseHandler
             $this->send(new Text($faceId, 'Nema resenja'));
         }
         else {
-            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->conclusion->text));
+            $weight = round($max/count($user->suggestedRule->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight));
 
         }
     }
