@@ -21,6 +21,7 @@ class FaceUser extends Model
             $this->suggestedRule = $rule->text;
         }
         $this->conditionsForSuggested = 0;
+        $this->save();
         return $currentMax;
     }
 }
