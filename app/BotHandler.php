@@ -91,11 +91,11 @@ class BotHandler extends BaseHandler
             $weight1 = round($max1/count($user->suggestedRule->conditions), 2);
             $this->send(new Text($faceId, 'Preporuka 1: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight1));
 
-            $weight2 = round($max2/count($user->suggestedRule->conditions), 2);
-            $this->send(new Text($faceId, 'Preporuka 2: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight2));
+            $weight2 = round($max2/count($user->suggestedRuleSecond->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka 2: '.$user->suggestedRuleSecond->conclusion->text. ' Tezina: '.$weight2));
 
-            $weight3 = round($max3/count($user->suggestedRule->conditions), 2);
-            $this->send(new Text($faceId, 'Preporuka 3: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight3));
+            $weight3 = round($max3/count($user->suggestedRuleThird->conditions), 2);
+            $this->send(new Text($faceId, 'Preporuka 3: '.$user->suggestedRuleThird->conclusion->text. ' Tezina: '.$weight3));
         }
         $this->finished($user);
     }
