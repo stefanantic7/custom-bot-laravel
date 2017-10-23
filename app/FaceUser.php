@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class FaceUser extends Model
 {
-    private $max1;
-    private $max2;
-    private $max3;
+    private $max1=0;
+    private $max2=0;
+    private $max3=0;
 
     public function getMax1Attribute()
     {
@@ -54,6 +54,17 @@ class FaceUser extends Model
 
             $this->suggestedRule = $rule;
             $this->max1 = $this->conditionsForSuggested;
+        }
+        else if($this->conditionsForSuggested > $this->max2) {
+            $this->suggestedRuleThird = $this->suggestedRuleSecond;
+            $this->max3 = $this->max2;
+
+            $this->suggestedRuleSecond = $rule;
+            $this->max2 = $this->conditionsForSuggested;
+        }
+        else if($this->conditionsForSuggested > $this->max3) {
+            $this->suggestedRuleThird = $rule;
+            $this->max3 = $this->conditionsForSuggested;
         }
         $this->conditionsForSuggested = 0;
 
