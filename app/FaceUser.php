@@ -10,6 +10,11 @@ class FaceUser extends Model
     private $max2=0;
     private $max3=0;
 
+
+    private $suggestedRule;
+    private $suggestedRuleSecond;
+    private $suggestedRuleThird;
+
     public function getMax1Attribute()
     {
         return $this->max1;
@@ -35,17 +40,45 @@ class FaceUser extends Model
         $this->max3 = $value;
     }
 
+    public function getSuggestedRuleAttribute()
+    {
+        return $this->suggestedRule;
+    }
+    public function setSuggestedRuleAttribute($value)
+    {
+        $this->suggestedRule = $value;
+    }
+
+    public function getSuggestedRuleSecondAttribute()
+    {
+        return $this->suggestedRuleSecond;
+    }
+    public function setSuggestedRuleSecondAttribute($value)
+    {
+        $this->suggestedRuleSecond = $value;
+    }
+
+    public function getSuggestedRuleThirdAttribute()
+    {
+        return $this->suggestedRuleThird;
+    }
+    public function setSuggestedRuleThirdAttribute($value)
+    {
+        $this->suggestedRuleThird = $value;
+    }
+
     public function getMoreRelevant($currentMax, $rule) {
         $conditions = $rule->conditions;
         $trueStatements = json_decode($this->trueStatements);
-
+        $counter = 0;
         foreach ($conditions as $condition) {
             $condition = $condition->text;
             if (in_array($condition, $trueStatements)) {
-                $this->conditionsForSuggested++;
+                $counter++;
+//                $this->conditionsForSuggested++;
             }
         }
-        if($this->conditionsForSuggested > $currentMax) {
+        if($counter > $currentMax) {
             $this->suggestedRuleThird = $this->suggestedRuleSecond;
             $this->max3 = $this->max2;
 
@@ -53,20 +86,20 @@ class FaceUser extends Model
             $this->max2 = $this->max1;
 
             $this->suggestedRule = $rule;
-            $this->max1 = $this->conditionsForSuggested;
+            $this->max1 = $counter;
         }
-        else if($this->conditionsForSuggested > $this->max2) {
+        else if($counter > $this->max2) {
             $this->suggestedRuleThird = $this->suggestedRuleSecond;
             $this->max3 = $this->max2;
 
             $this->suggestedRuleSecond = $rule;
-            $this->max2 = $this->conditionsForSuggested;
+            $this->max2 = $counter;
         }
-        else if($this->conditionsForSuggested > $this->max3) {
+        else if($counter > $this->max3) {
             $this->suggestedRuleThird = $rule;
-            $this->max3 = $this->conditionsForSuggested;
+            $this->max3 = $counter;
         }
-        $this->conditionsForSuggested = 0;
+//        $this->conditionsForSuggested = 0;
 
         $currentStatus = [
             'max1' => $this->max1,
