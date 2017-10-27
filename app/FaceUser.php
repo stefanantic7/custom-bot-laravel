@@ -68,7 +68,7 @@ class FaceUser extends Model
     }
 
     public function getMoreRelevant($currentMax, $rule) {
-        $conditions = $rule->conditions;
+        $conditions = array_merge($rule->conditions, $rule->mainConditions);
         $trueStatements = json_decode($this->trueStatements);
         $counter = 0;
         foreach ($conditions as $condition) {

@@ -53,7 +53,7 @@ class BotHandler extends BaseHandler
 
         $rule = Rule::with('conditions')->first();
 
-        $user->question = $rule->conditions[0]->text;
+        $user->question = $rule->mainConditions[0]->text;
         $user->save();
 
         $this->send(new Text($faceId, $user->question));
@@ -69,12 +69,12 @@ class BotHandler extends BaseHandler
                 return;
             }
 
-            if($returned === true ){
-                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
-                $this->finished($user);
-
-                return;
-            }
+//            if($returned === true ){
+//                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
+//                $this->finished($user);
+//
+//                return;
+//            }
         }
 
         $max1 = $max2 = $max3 = 0;
@@ -89,17 +89,22 @@ class BotHandler extends BaseHandler
             $this->send(new Text($faceId, 'Nema resenja'));
         }
         else {
-            $weight1 = round($max1/count($user->suggestedRule->conditions), 2);
+            $count = count($user->suggestedRule->conditions) + count($user->suggestedRule->mainConditions);
+            $weight1 = round($max1/$count, 2);
             $this->send(new Text($faceId, 'Preporuka 1: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight1));
         }
 
         if(! is_null($user->suggestedRuleSecond)) {
-            $weight2 = round($max2/count($user->suggestedRuleSecond->conditions), 2);
+            $count = count($user->suggestedRuleSecond->conditions) + count($user->suggestedRuleSecond->mainConditions);
+
+            $weight2 = round($max2/$count, 2);
             $this->send(new Text($faceId, 'Preporuka 2: '.$user->suggestedRuleSecond->conclusion->text. ' Tezina: '.$weight2));
         }
 
         if(! is_null($user->suggestedRuleThird)) {
-            $weight3 = round($max3/count($user->suggestedRuleThird->conditions), 2);
+            $count = count($user->suggestedRuleThird->conditions) + count($user->suggestedRuleThird->mainConditions);
+
+            $weight3 = round($max3/$count, 2);
             $this->send(new Text($faceId, 'Preporuka 3: '.$user->suggestedRuleThird->conclusion->text. ' Tezina: '.$weight3));
         }
 
