@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    $rules = \App\Rule::with(['conditions', 'conclusion'])->get();
-    return $rules;
+    $rule = \App\Rule::with(['mainConditions', 'conditions', 'conclusion'])->first();
+    return array_merge($rule->mainConditions->toArray(), $rule->conditions->toArray());
 });
 
 ////route for verification
