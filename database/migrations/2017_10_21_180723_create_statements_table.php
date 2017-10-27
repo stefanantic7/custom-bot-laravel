@@ -17,6 +17,7 @@ class CreateStatementsTable extends Migration
             $table->increments('id');
             $table->string('text');
             $table->integer('conclusion_for_rule')->nullable();
+            $table->integer('main_condition_for_rule')->nullable();
             $table->integer('condition_for_rule')->nullable();
             $table->timestamps();
         });

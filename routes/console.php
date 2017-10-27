@@ -37,6 +37,15 @@ Artisan::command('json:import', function () {
             $condition->save();
         }
 
+        foreach ($rule_json->mainConditions as $condition_json) {
+            $condition = new \App\Statement();
+
+            $condition->text = $condition_json;
+            $condition->main_condition_for_rule = $rule->id;
+
+            $condition->save();
+        }
+
 
         $conclusion->save();
         $rule->save();
