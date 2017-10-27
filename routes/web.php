@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     $rule = \App\Rule::with(['mainConditions', 'conditions', 'conclusion'])->first();
-    return array_merge($rule->mainConditions->toArray(), $rule->conditions->toArray());
+    dd($rule->mainConditions->merge($rule->conditions));
 });
 
 ////route for verification
