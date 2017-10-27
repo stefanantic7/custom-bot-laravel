@@ -76,6 +76,7 @@ class BotHandler extends BaseHandler
                 return;
             }
         }
+
         $max1 = $max2 = $max3 = 0;
         foreach ($rules as $rule) {
             $relevant = $user->getMoreRelevant($max1, $rule);
