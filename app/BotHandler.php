@@ -89,7 +89,7 @@ class BotHandler extends BaseHandler
             $weight1 = round($max1/$count, 2);
 
             $suggestion = [
-                'weight' => $weight1,
+                'weight' => $weight1*100,
                 'suggestion' => $user->suggestedRule->conclusion->text
             ];
 
@@ -102,7 +102,7 @@ class BotHandler extends BaseHandler
             $weight2 = round($max2/$count, 2);
 
             $suggestion = [
-                'weight' => $weight2,
+                'weight' => $weight2*100,
                 'suggestion' => $user->suggestedRuleSecond->conclusion->text
             ];
 
@@ -115,7 +115,7 @@ class BotHandler extends BaseHandler
             $weight3 = round($max3/$count, 2);
 
             $suggestion = [
-                'weight' => $weight3,
+                'weight' => $weight3*100,
                 'suggestion' => $user->suggestedRuleThird->conclusion->text
             ];
 

@@ -16,21 +16,21 @@ Route::get('/', function () {
     $suggestions = [];
 
     $suggestion = [
-        'weight' => 5,
+        'weight' => 0.955555*100,
         'suggestion' => 'nesto'
     ];
 
     $suggestions[] = $suggestion;
 
     $suggestion = [
-        'weight' => 10,
+        'weight' => 0.944444*100,
         'suggestion' => 'nestoo'
     ];
 
     $suggestions[] = $suggestion;
 
     $suggestion = [
-        'weight' => 9,
+        'weight' => 1.00*100,
         'suggestion' => 'nestoo'
     ];
 
