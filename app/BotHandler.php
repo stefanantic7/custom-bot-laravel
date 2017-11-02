@@ -123,7 +123,7 @@ class BotHandler extends BaseHandler
         }
 
         usort($suggestions, function($a, $b) {
-            return $a['weight'] - $b['weight'];
+            return $b['weight'] - $a['weight'];
         });
 
         foreach ($suggestions as $index=>$suggestion) {
