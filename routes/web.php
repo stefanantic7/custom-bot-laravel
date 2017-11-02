@@ -12,12 +12,40 @@
 */
 
 Route::get('/', function () {
+
+    $suggestions = [];
+
+    $suggestion = [
+        'weight' => 5,
+        'suggestion' => 'nesto'
+    ];
+
+    $suggestions[] = $suggestion;
+
+    $suggestion = [
+        'weight' => 10,
+        'suggestion' => 'nestoo'
+    ];
+
+    $suggestions[] = $suggestion;
+
+    $suggestion = [
+        'weight' => 9,
+        'suggestion' => 'nestoo'
+    ];
+
+    $suggestions[] = $suggestion;
+
+    usort($suggestions, function($a, $b) {
+        return $b['weight'] - $a['weight'];
+    });
+
+    foreach ($suggestions as $index=>$suggestion) {
+        var_dump($index.' '.$suggestion['weight']);
+    }
+
+//    return $suggestions;
+
     $rule = \App\Rule::with(['mainConditions', 'conditions', 'conclusion'])->first();
     dd($rule->mainConditions->merge($rule->conditions));
 });
-
-////route for verification
-//Route::get("/bot", "MainController@receive")->middleware("verify");
-//
-////where Facebook sends messages to. No need to attach the middleware to this because the verification is via GET
-//Route::post("/bot", "MainController@receive");

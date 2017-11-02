@@ -68,13 +68,6 @@ class BotHandler extends BaseHandler
                 $this->send(new Text($faceId, $user->question));
                 return;
             }
-
-//            if($returned === true ){
-//                $this->send(new Text($faceId, 'Odgovor za Vas: '.$rule->conclusion->text));
-//                $this->finished($user);
-//
-//                return;
-//            }
         }
 
         $max1 = $max2 = $max3 = 0;
@@ -85,27 +78,56 @@ class BotHandler extends BaseHandler
             $max3 = $relevant['max3'];
         }
 
+        $suggestions = [];
+
         if(is_null($user->suggestedRule)){
             $this->send(new Text($faceId, 'Nema resenja'));
         }
         else {
             $count = count($user->suggestedRule->conditions) + count($user->suggestedRule->mainConditions);
+
             $weight1 = round($max1/$count, 2);
-            $this->send(new Text($faceId, 'Preporuka 1: '.$user->suggestedRule->conclusion->text. ' Tezina: '.$weight1));
+
+            $suggestion = [
+                'weight' => $weight1,
+                'suggestion' => $user->suggestedRule->conclusion->text
+            ];
+
+            $suggestions[] = $suggestion;
         }
 
         if(! is_null($user->suggestedRuleSecond)) {
             $count = count($user->suggestedRuleSecond->conditions) + count($user->suggestedRuleSecond->mainConditions);
 
             $weight2 = round($max2/$count, 2);
-            $this->send(new Text($faceId, 'Preporuka 2: '.$user->suggestedRuleSecond->conclusion->text. ' Tezina: '.$weight2));
+
+            $suggestion = [
+                'weight' => $weight2,
+                'suggestion' => $user->suggestedRuleSecond->conclusion->text
+            ];
+
+            $suggestions[] = $suggestion;
         }
 
         if(! is_null($user->suggestedRuleThird)) {
             $count = count($user->suggestedRuleThird->conditions) + count($user->suggestedRuleThird->mainConditions);
 
             $weight3 = round($max3/$count, 2);
-            $this->send(new Text($faceId, 'Preporuka 3: '.$user->suggestedRuleThird->conclusion->text. ' Tezina: '.$weight3));
+
+            $suggestion = [
+                'weight' => $weight3,
+                'suggestion' => $user->suggestedRuleThird->conclusion->text
+            ];
+
+            $suggestions[] = $suggestion;
+        }
+
+        usort($suggestions, function($a, $b) {
+            return $a['weight'] - $b['weight'];
+        });
+
+        foreach ($suggestions as $index=>$suggestion) {
+            $this->send(new Text($faceId, 'Preporuka '.($index+1).': '.$suggestion['suggestion']. ' Tezina: '.$suggestion['weight']));
         }
 
         $this->finished($user);
